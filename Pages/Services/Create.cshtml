@@ -1,0 +1,78 @@
+﻿@page
+@model Best_Beauty.Pages.Services.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Service</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Service.Denumire" class="control-label"></label>
+                <input asp-for="Service.Denumire" class="form-control" />
+                <span asp-validation-for="Service.Denumire" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Durata" class="control-label"></label>
+                <input asp-for="Service.Durata" class="form-control" />
+                <span asp-validation-for="Service.Durata" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Pret" class="control-label"></label>
+                <input asp-for="Service.Pret" class="form-control" />
+                <span asp-validation-for="Service.Pret" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Service.Data" class="control-label"></label>
+                <input asp-for="Service.Data" class="form-control" />
+                <span asp-validation-for="Service.Data" class="text-danger"></span>
+            </div>
+            <label asp-for="Service.ClientID" class="control-label">Nume client</label>
+            <select asp-for="Service.ClientID" class="form-control" asp-items="ViewBag.ClientID">
+            </select>
+            <span asp-validation-for="Service.ClientID" class="text-danger"></span>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                foreach (var cat in Model.AssignedCategoryDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedCategories"
+                                               value="@cat.CategoryID"
+                                               @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) />
+                                        @cat.CategoryID @: @cat.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
